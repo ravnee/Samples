@@ -1,0 +1,207 @@
+
+
+import java.io.IOException;
+import java.net.URL;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+/**
+ * Implementation of the EchoService interface
+ */
+public class EchoServiceImpl implements EchoService {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.netapp.scvm.EchoService#echo(java.lang.String)
+	 */
+	public String echo(String message) {
+		return message;
+	}
+
+	@Override
+	public String mockApi() {
+
+		HttpsURLConnection conn = null;
+		System.out.println("hi I am here");
+		String res = null;
+
+		try {
+			// configure the SSLContext with a TrustManager
+			SSLContext ctx = SSLContext.getInstance("TLS");
+			ctx.init(new KeyManager[0], new TrustManager[] { new DefaultTrustManager() }, new SecureRandom());
+			SSLContext.setDefault(ctx);
+
+			URL url = new URL("https://localhost:9002/mockapi/rest/clusters");
+			conn = (HttpsURLConnection) url.openConnection();
+			conn.setHostnameVerifier(new HostnameVerifier() {
+				@Override
+				public boolean verify(String arg0, SSLSession arg1) {
+					return true;
+				}
+			});
+			System.out.println(conn.getResponseCode());
+
+		} catch (Exception ex) {
+
+		}
+
+		HttpClient httpclient = new HttpClient();
+		GetMethod method = new GetMethod("https://localhost:9002/mockapi/rest/clusters");
+		try {
+			int statuscode = httpclient.executeMethod(method);
+			res = method.getResponseBodyAsString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			method.releaseConnection();
+		}
+		System.out.println("Ravneet Test " + res);
+		// res="Ravneet";
+		return res;
+
+	}
+
+	private static class DefaultTrustManager implements X509TrustManager {
+
+		@Override
+		public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+		}
+
+		@Override
+		public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+		}
+
+		@Override
+		public X509Certificate[] getAcceptedIssuers() {
+			return null;
+		}
+	}
+
+	public static void main(String[] args) {
+		/*
+		 * System.out.println("welcome"); try {
+		 * 
+		 * ClientRequest request = new ClientRequest("http://localhost:9003/");
+		 * request.accept("application/json"); ClientResponse<String> response =
+		 * request.get(String.class); System.out.println(response.getStatus());
+		 * if (response.getStatus() != 200) { throw new RuntimeException(
+		 * "Failed : HTTP error code : " + response.getStatus()); }
+		 * 
+		 * BufferedReader br = new BufferedReader(new InputStreamReader( new
+		 * ByteArrayInputStream(response.getEntity().getBytes())));
+		 * 
+		 * String output; StringBuilder retVal=new StringBuilder();
+		 * System.out.println("Output from Server .... \n"); while ((output =
+		 * br.readLine()) != null) { System.out.println(output);
+		 * retVal.append(output); } System.out.println("Ravneet "+retVal); }
+		 * catch (Exception ex) { System.out.println("Donne");
+		 * System.out.println(ex.getMessage()); } System.out.println("Done");
+		 */
+
+		HttpsURLConnection conn = null;
+
+		try {
+			// configure the SSLContext with a TrustManager
+			SSLContext ctx = SSLContext.getInstance("TLS");
+			ctx.init(new KeyManager[0], new TrustManager[] { new DefaultTrustManager() }, new SecureRandom());
+			SSLContext.setDefault(ctx);
+
+			//URL url = new URL("https://localhost:9002/");
+			URL url = new URL("https://172.19.200.44:8144/scbr/smcoreplugin/auth/login");
+			conn = (HttpsURLConnection) url.openConnection();
+			conn.setHostnameVerifier(new HostnameVerifier() {
+				@Override
+				public boolean verify(String arg0, SSLSession arg1) {
+					return true;
+				}
+			});
+			System.out.println(conn.getResponseCode());
+
+		} catch (Exception ex) {
+
+		}
+
+		System.out.println("hi I am here");
+		String res = null;
+		HttpClient httpclient = new HttpClient();
+		//GetMethod method = new GetMethod("https://localhost:9002/mockapi/rest/clusters");
+		GetMethod method = new GetMethod("https://172.19.200.44:8144/scbr/smcoreplugin/svm/list?sessionId=bda1c2a76df6ad3018e496f94bb090497f256344&serviceUrl=https://10.60.189.198:443/sdk");
+		method.addRequestHeader("Accept", "application/xml");
+		method.addRequestHeader("Content-Type", "application/xml");
+		//method.setRequestHeader("Accept",  "application/xml");
+		//method.setRequestHeader("Content-Type", "application/xml");
+		try {
+			int statuscode = httpclient.executeMethod(method);
+			res = method.getResponseBodyAsString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			method.releaseConnection();
+			//conn.disconnect();
+		}
+		System.out.println("Ravneet Test " + res);
+	}
+
+	
+	@Override
+	public String svmList() {
+		HttpsURLConnection conn = null;
+		System.out.println("hi I am here");
+		String res = null;
+
+		try {
+			// configure the SSLContext with a TrustManager
+			SSLContext ctx = SSLContext.getInstance("TLS");
+			ctx.init(new KeyManager[0], new TrustManager[] { new DefaultTrustManager() }, new SecureRandom());
+			SSLContext.setDefault(ctx);
+
+			URL url = new URL("https://172.19.200.44:8144/scbr/smcoreplugin/auth/login");
+			conn = (HttpsURLConnection) url.openConnection();
+			conn.setHostnameVerifier(new HostnameVerifier() {
+				@Override
+				public boolean verify(String arg0, SSLSession arg1) {
+					return true;
+				}
+			});
+			System.out.println(conn.getResponseCode());
+
+		} catch (Exception ex) {
+
+		}
+
+		// TODO Auto-generated method stub
+		//String res = null;
+		HttpClient httpclient = new HttpClient();
+		GetMethod method = new GetMethod("https://172.19.200.44:8144/scbr/smcoreplugin/svm/list?sessionId=bda1c2a76df6ad3018e496f94bb090497f256344&serviceUrl=https://10.60.189.198:443/sdk");
+		method.addRequestHeader("Accept", "application/xml");
+		method.addRequestHeader("Content-Type", "application/xml");
+		try {
+			int statuscode = httpclient.executeMethod(method);
+			res = method.getResponseBodyAsString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			method.releaseConnection();
+		}
+		System.out.println("Ravneet Test " + res);
+		// res="Ravneet";
+		return res;
+	}
+}
