@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 081e864068ab936693c2a6e69d18abd57be14782
 import java.io.InputStream;
 import java.net.URL;
 import java.security.SecureRandom;
