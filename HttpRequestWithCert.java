@@ -1,3 +1,4 @@
+// jar usd for this sample is commons-httpclient-3.1.jar
 import java.io.InputStream;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -51,7 +52,7 @@ public class HttpRequestWithCert {
 					return true;
 				}
 			});
-			System.out.println(conn.getResponseCode());
+			System.out.printlncommons-httpclient-3.1.jar(conn.getResponseCode());
 
 		} catch (Exception ex) {
 
