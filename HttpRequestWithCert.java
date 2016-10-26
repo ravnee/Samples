@@ -1,5 +1,3 @@
-package com.netapp.vadp.services;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -60,34 +58,34 @@ public class HttpRequestWithCert {
 		}
 	}
 	public static void main(String[] args) {
-		getCertificate();
-		HttpClient httpclient = new HttpClient();
-				
-		String name = "admin";
-        String password = "admin123";
+        //for handshake
+        getCertificate();
+        //httpclient
+        HttpClient httpclient = new HttpClient();
+        String name = "USERNAME";
+        String password = "PASSWORD";
         String authString = name + ":" + password;
+        //username and password encoded here
         byte[] byteArr = authString.getBytes();
-        String authStringEnc = org.apache.commons.codec.binary.Base64.encodeBase64String(byteArr);
+        String authStringEnc = Base64.getEncoder().encodeToString(byteArr);
         System.out.println("Base64 encoded auth string: " + authStringEnc);
-        String requestUrl = "https://10.xxx.xxx.xxx/";
+        String requestUrl = "https://URL";
         System.out.println("Making Api call "+requestUrl);
-        GetMethod method = new GetMethod(requestUrl);		
-	
-		method.addRequestHeader("Authorization","Basic "+authStringEnc);		
-		method.addRequestHeader("Content-Type", "application/json");		
-		try {			
-			int statuscode = httpclient.executeMethod(method);
-			System.out.println("statuscode is "+statuscode);
-			String retVal2=null;
-			InputStream inpStream = method.getResponseBodyAsStream();
-			retVal2  = convertStreamToString(inpStream);
-			System.out.println(retVal2);
-			inpStream.close();
-		} catch (Exception e) { // TODO Auto-generated catch block
-									// e.printStackTrace(); } finally {
-			e.printStackTrace();
-			method.releaseConnection();
-		}
+        GetMethod method = new GetMethod(requestUrl);
+        method.addRequestHeader("Authorization","Basic "+authStringEnc);
+        try {
+            int statuscode = httpclient.executeMethod(method);
+            System.out.println("statuscode is "+statuscode);
+            String response=null;
+            InputStream inpStream = method.getResponseBodyAsStream();
+            response  = convertStreamToString(inpStream);
+            System.out.println(response);
+            inpStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            method.releaseConnection();
+        }
+
 
 	}
 	static String convertStreamToString(java.io.InputStream is) {
