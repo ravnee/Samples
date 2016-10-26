@@ -59,7 +59,7 @@ public class EchoServiceImpl implements EchoService {
 		}
 
 		HttpClient httpclient = new HttpClient();
-		GetMethod method = new GetMethod("https://localhost:9002/mockapi/rest/clusters");
+		GetMethod method = new GetMethod("https://localhost:9000”);
 		try {
 			int statuscode = httpclient.executeMethod(method);
 			res = method.getResponseBodyAsString();
@@ -121,7 +121,7 @@ public class EchoServiceImpl implements EchoService {
 			SSLContext.setDefault(ctx);
 
 			//URL url = new URL("https://localhost:9002/");
-			URL url = new URL("https://172.19.200.44:8144/scbr/smcoreplugin/auth/login");
+			URL url = new URL("https://10.”);
 			conn = (HttpsURLConnection) url.openConnection();
 			conn.setHostnameVerifier(new HostnameVerifier() {
 				@Override
@@ -139,7 +139,7 @@ public class EchoServiceImpl implements EchoService {
 		String res = null;
 		HttpClient httpclient = new HttpClient();
 		//GetMethod method = new GetMethod("https://localhost:9002/mockapi/rest/clusters");
-		GetMethod method = new GetMethod("https://172.19.200.44:8144/scbr/smcoreplugin/svm/list?sessionId=bda1c2a76df6ad3018e496f94bb090497f256344&serviceUrl=https://10.60.189.198:443/sdk");
+		GetMethod method = new GetMethod("https://17");
 		method.addRequestHeader("Accept", "application/xml");
 		method.addRequestHeader("Content-Type", "application/xml");
 		//method.setRequestHeader("Accept",  "application/xml");
@@ -171,7 +171,7 @@ public class EchoServiceImpl implements EchoService {
 			ctx.init(new KeyManager[0], new TrustManager[] { new DefaultTrustManager() }, new SecureRandom());
 			SSLContext.setDefault(ctx);
 
-			URL url = new URL("https://172.19.200.44:8144/scbr/smcoreplugin/auth/login");
+			URL url = new URL("https://10”);
 			conn = (HttpsURLConnection) url.openConnection();
 			conn.setHostnameVerifier(new HostnameVerifier() {
 				@Override
@@ -188,7 +188,7 @@ public class EchoServiceImpl implements EchoService {
 		// TODO Auto-generated method stub
 		//String res = null;
 		HttpClient httpclient = new HttpClient();
-		GetMethod method = new GetMethod("https://172.19.200.44:8144/scbr/smcoreplugin/svm/list?sessionId=bda1c2a76df6ad3018e496f94bb090497f256344&serviceUrl=https://10.60.189.198:443/sdk");
+		GetMethod method = new GetMethod("https://10”);
 		method.addRequestHeader("Accept", "application/xml");
 		method.addRequestHeader("Content-Type", "application/xml");
 		try {
